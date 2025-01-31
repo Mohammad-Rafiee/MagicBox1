@@ -5,7 +5,7 @@ set -o pipefail  # Fail if any command in a pipeline fails
 
 echo "🔧 Starting Raspberry Pi Router and OpenVPN Client Setup..."
 
-SETUP_DIR="setup-files"
+SETUP_DIR="$(pwd)/setup-files"
 
 ### 1️⃣ Install Required Packages
 echo "📦 Installing necessary packages..."
