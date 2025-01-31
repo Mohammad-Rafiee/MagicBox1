@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodogsplash Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .login-container input[type="submit"] {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .login-container input[type="submit"]:hover {
+            background: #0056b3;
+        }
+
+        .error {
+            color: red;
+            background: #ffeeee;
+            padding: 8px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>WiFi Login</h2>
+
+        <!-- Error Message (If needed) -->
+        <!-- <p class="error">Invalid credentials. Please try again.</p> -->
+
+        <form method="GET" action="$authaction">
+            <input type="hidden" name="tok" value="$tok">
+            <input type="hidden" name="redir" value="$redir">
+
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" maxlength="12" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" maxlength="10" required>
+            </div>
+
+            <input type="submit" value="Enter">
+        </form>
+    </div>
+
+</body>
+</html>
