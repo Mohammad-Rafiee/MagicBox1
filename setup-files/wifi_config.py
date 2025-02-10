@@ -60,3 +60,7 @@ async def configure_wifi(request: Request, ssid: str = Form(...), password: str 
 
     except Exception as e:
         return RedirectResponse(f"/?msg=Error%3A+{str(e)}", status_code=status.HTTP_303_SEE_OTHER)
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
