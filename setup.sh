@@ -7,40 +7,24 @@ echo "🔧 Starting Raspberry Pi Router and OpenVPN Client Setup..."
 
 SETUP_DIR="$(pwd)/setup-files"
 
-### 1️⃣ Install Required Packages
+### 1️⃣ Remove Nodogsplash if installed
+echo "🗑 Removing Nodogsplash if installed..."
+if systemctl list-units --full -all | grep -q "nodogsplash.service"; then
+    sudo systemctl stop nodogsplash
+    sudo systemctl disable nodogsplash
+    sudo rm -f /etc/systemd/system/nodogsplash.service
+    sudo systemctl daemon-reload
+fi
+
+# Remove Nodogsplash files and directories
+sudo rm -rf /opt/nodogsplash /etc/nodogsplash /bin/myauth.sh
+
+### 2️⃣ Install Required Packages
 echo "📦 Installing necessary packages..."
 sudo apt update && sudo apt install -y \
     python3 python3-fastapi python3-uvicorn python3-jinja2 \
     isc-dhcp-server iptables-persistent openvpn \
     git libmicrohttpd-dev build-essential
-
-### 2️⃣ Install and Configure Nodogsplash
-echo "🚀 Installing Nodogsplash..."
-sudo git clone https://github.com/nodogsplash/nodogsplash.git /opt/nodogsplash
-cd /opt/nodogsplash
-sudo make
-sudo make install
-
-echo "🔧 Configuring Nodogsplash..."
-sudo mkdir -p /etc/nodogsplash/htdocs
-
-# Move configuration files
-sudo cp $SETUP_DIR/nodogsplash.conf /etc/nodogsplash/nodogsplash.conf
-sudo cp $SETUP_DIR/splash.html /etc/nodogsplash/htdocs/splash.html
-sudo cp $SETUP_DIR/status.html /etc/nodogsplash/htdocs/status.html
-sudo cp $SETUP_DIR/myauth.sh /bin/myauth.sh
-sudo cp $SETUP_DIR/users.txt /etc/nodogsplash/users.txt
-
-# Set permissions
-sudo chmod +x /bin/myauth.sh
-sudo chmod 600 /etc/nodogsplash/users.txt
-sudo chown root:root /bin/myauth.sh /etc/nodogsplash/users.txt
-
-# Setup systemd service
-sudo cp $SETUP_DIR/nodogsplash.service /etc/systemd/system/nodogsplash.service
-sudo systemctl daemon-reload
-sudo systemctl enable nodogsplash
-sudo systemctl start nodogsplash
 
 ### 3️⃣ Configure OpenVPN
 echo "🔑 Setting up OpenVPN client..."
